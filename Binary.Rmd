@@ -1,0 +1,52 @@
+---
+title: "Biostat_626_Mid_1"
+author: "Yiran Liu"
+output: html_document
+---
+
+```{r}
+library(caret)
+library(caretEnsemble)
+```
+
+```{r}
+training_data <- read.table("training_data.txt", header = TRUE)
+test_data <- read.table("test_data.txt", header = TRUE)
+```
+
+```{r}
+training_data$label <- ifelse(training_data$activity %in% 4:12, 0, 1)
+train_data <- training_data[,3:564]
+train_data$label <- factor(train_data$label, levels = c("0", "1"))
+```
+    
+```{r}
+label <- train_data$label
+set.seed(123)
+index = sample(nrow(train_data), floor(0.75 * nrow(train_data)))
+train.data = train_data[index, ]
+train.label = label[index]
+test.data = train_data[-index, ]
+test.label = label[-index]
+```
+    
+```{r}
+control <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
+set.seed(123)
+fit.c50 <- train(label ~ ., data = train_data, method = "C5.0", 
+                 metric = "Accuracy", trControl = control)
+```
+
+```{r}
+c50.pred <- predict(fit.c50, newdata = test.data)
+confusionMatrix(factor(c50.pred), factor(test.label))
+```
+
+```{r}
+pred <- predict(fit.c50, test_data[, 2:562])
+df <- data.frame(label = c(pred))
+```
+
+```{r}
+write.table(df, file = "binary_0176.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
+```

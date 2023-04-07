@@ -1,1 +1,1 @@
-# Biostat.626
+# BIOSTAT 626 Midterm

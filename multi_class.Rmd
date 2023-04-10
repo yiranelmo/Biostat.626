@@ -1,0 +1,164 @@
+---
+title: "multi-class"
+author: "Yiran Liu"
+output: html_document
+---
+
+```{r}
+library(glmnet)
+library(readr)
+library(caret)
+```
+
+# load data
+```{r}
+training_data <- read.table("training_data.txt", header = T)
+testing_data <- read.table("test_data.txt", header = T)
+path = "binary.txt"
+binary_result <- read.table(path, header = F)
+testing_data$binary <- binary_result$V1
+```
+
+# process train dataset
+```{r}
+training_data$activity <- ifelse(training_data$activity >= 8 & training_data$activity <= 12, 7, training_data$activity)
+train_static <- subset(training_data, activity %in% c(4, 5, 6, 7))
+train_dynamic <- subset(training_data, activity %in% c(1, 2, 3))
+```
+
+# for dynamic data
+```{r}
+set.seed(123)
+Index.dynamic <- createDataPartition(train_dynamic$activity, p = 0.7, list = FALSE)
+dynamic_train <- train_dynamic[Index.dynamic, ]
+dynamic_test <- train_dynamic[-Index.dynamic, ]
+y_train.dynamic <- factor(dynamic_train$activity)
+x_train.dynamic <- data.matrix(dynamic_train[, -2])
+y_test.dynamic <- factor(dynamic_test$activity)
+x_test.dynamic <- data.matrix(dynamic_test[, -2])
+```
+
+# elastic net regularization
+```{r}
+alpha_grid <- seq(0, 1, by = 0.1)
+cv_results_dynamic <- lapply(alpha_grid, function(alpha) {
+  set.seed(123)
+  cv_fit <- cv.glmnet(x_train.dynamic, y_train.dynamic, 
+                      family = "multinomial", 
+                      alpha = alpha,
+                      type.multinomial = "grouped",
+                      type.measure = "class")
+  fit <- glmnet(x_train.dynamic, y_train.dynamic, 
+                family = "multinomial", 
+                alpha = alpha,
+                type.multinomial = "grouped",
+                lambda = cv_fit$lambda.min)
+  pred <- predict(fit, newx = x_test.dynamic, type = "class")
+  acc <- sum(pred == y_test.dynamic) / length(y_test.dynamic)
+  return(list(alpha = alpha, accuracy = acc))
+})
+best_alpha.dynamic <- alpha_grid[[which.max(sapply(cv_results_dynamic, function(x) x$accuracy))]]
+```
+
+# alpha = 0.1 ---> ridge
+```{r}
+set.seed(46)
+lambda_grid <- 10^seq(-5, 2, length = 150)
+cv_fit.dynamic <- cv.glmnet(x_train.dynamic, y_train.dynamic, 
+                            family = "multinomial", 
+                            alpha = best_alpha.dynamic,
+                            lambda = lambda_grid,
+                            type.multinomial = "grouped",
+                            type.measure = "class")
+fit.dynamic <- glmnet(x_train.dynamic, y_train.dynamic, 
+                      family = "multinomial", 
+                      alpha = best_alpha.dynamic, 
+                      type.multinomial = "grouped",
+                      lambda = cv_fit.dynamic$lambda.min)
+pred.dynamic <- predict(fit.dynamic, newx = x_test.dynamic, type = "class")
+confusionMatrix(table(pred.dynamic, y_test.dynamic))
+```
+
+# for static data
+```{r}
+set.seed(123)
+Index.static <- createDataPartition(train_static$activity, p = 0.7, list = FALSE)
+static_train <- train_static[Index.static, ]
+static_test <- train_static[-Index.static, ]
+y_train.static <- factor(static_train$activity)
+x_train.static <- data.matrix(static_train[, -2])
+y_test.static <- factor(static_test$activity)
+x_test.static <- data.matrix(static_test[, -2])
+```
+
+# elastic net regularization
+```{r}
+cv_results_static <- lapply(alpha_grid, function(alpha) {
+  set.seed(123)
+  cv_fit <- cv.glmnet(x_train.static, y_train.static, 
+                      family = "multinomial", 
+                      alpha = alpha,
+                      type.multinomial = "grouped",
+                      type.measure = "class")
+  fit <- glmnet(x_train.static, y_train.static, 
+                family = "multinomial", 
+                alpha = alpha,
+                type.multinomial = "grouped",
+                lambda = cv_fit$lambda.min)
+  pred <- predict(fit, newx = x_test.static, type = "class")
+  acc <- sum(pred == y_test.static) / length(y_test.static)
+  return(list(alpha = alpha, accuracy = acc))
+})
+best_alpha.static <- alpha_grid[[which.max(sapply(cv_results_static, function(x) x$accuracy))]]
+```
+
+# alpha = 0.9 ---> lasso
+```{r}
+set.seed(46)
+lambda_grid <- 10^seq(-5, 2, length = 150)
+cv_fit.static <- cv.glmnet(x_train.static, y_train.static, 
+                    family = "multinomial", 
+                    alpha = best_alpha.static, 
+                    lambda = lambda_grid,
+                    type.multinomial = "grouped",
+                    type.measure = "class")
+fit.static <- glmnet(x_train.static, y_train.static,
+                     family = "multinomial", 
+                     alpha = best_alpha.static,
+                     type.multinomial = "grouped",
+                     lambda = cv_fit.static$lambda.min)
+pred.static <- predict(fit.static, newx = x_test.static, type = "class")
+confusionMatrix(table(pred.static, y_test.static))
+```
+
+# process test dataset
+```{r}
+testing_data$id <- 1:3162
+test_static <- subset(testing_data, binary == 0)
+test_dynamic <- subset(testing_data, binary == 1)
+x_test_static <- data.matrix(test_static[, 1:562])
+x_test_dynamic <- data.matrix(test_dynamic[, 1:562])
+```
+
+# predict
+```{r}
+pred_dynamic = predict(fit.dynamic, newx = x_test_dynamic, type = "class")
+pred_static = predict(fit.static, newx = x_test_static, type = "class")
+```
+
+```{r}
+dynamic_result <- as.data.frame(pred_dynamic)
+test_dynamic$result <- dynamic_result$s0
+static_result <- as.data.frame(pred_static)
+test_static$result <- static_result$s0
+```
+
+```{r}
+test_result <- rbind(test_dynamic, test_static)
+test_result <- test_result[order(test_result$id), ]
+```
+
+```{r}
+result <- data.frame(class = test_result$result)
+write.table(result, file = "multiclass.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
+```

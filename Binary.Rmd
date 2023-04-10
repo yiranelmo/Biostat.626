@@ -48,5 +48,5 @@ df <- data.frame(label = c(pred))
 ```
 
 ```{r}
-write.table(df, file = "binary_0176.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(df, file = "binary.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
 ```

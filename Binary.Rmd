@@ -1,6 +1,5 @@
 ---
-title: "Biostat_626_Mid_1"
-author: "Yiran Liu"
+title: "binary"
 output: html_document
 ---
 

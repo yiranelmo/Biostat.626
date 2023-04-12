@@ -1,6 +1,5 @@
 ---
 title: "multi-class"
-author: "Yiran Liu"
 output: html_document
 ---
 
@@ -112,7 +111,7 @@ cv_results_static <- lapply(alpha_grid, function(alpha) {
 best_alpha.static <- alpha_grid[[which.max(sapply(cv_results_static, function(x) x$accuracy))]]
 ```
 
-# alpha = 0.9 ---> lasso
+# alpha = 1 ---> lasso
 ```{r}
 set.seed(46)
 lambda_grid <- 10^seq(-5, 2, length = 150)

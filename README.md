@@ -64,6 +64,6 @@ install.packages('readr')
 
 Through continuous optimization, 100% accuracy in task 1 and 95.7% in task 2 were obtained on the Leaderboard.
 
-- **'binary.tx't** is the predict result for Task 1.
+- **'binary.txt'** is the predict result for Task 1.
 
 * **'multiclass.txt'** is the predict result for Task 2.

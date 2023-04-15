@@ -1,6 +1,8 @@
 # Machine Learning Prediction Model on Human Activity Recognition using Wearable Sensor Technology Data
 
-This project aims to build a prediction model using wearable sensor technology data to recognize human activities. Two tasks are to be completed using the provided dataset:
+This project aims to build a prediction model using wearable sensor technology data to recognize human activities. 
+
+Two tasks are to be completed using the provided dataset:
 
 1. **Binary Classification**: Classify the activity of each time window into static (0) and dynamic (1). For this task, postural transitions are considered as static (0).
 2. **Multi-class Classification**: Classify walking (1), walking_upstairs (2), walking_downstairs (3), sitting (4), standing (5), lying (6), and static postural transition (7).

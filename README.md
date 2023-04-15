@@ -45,7 +45,7 @@ Running **'Binary.Rmd'** will get **"binary.txt"**; running **'multi_class.Rmd'*
 
 ## Installing
 
-Install and run the following packages in RStudio to support running "multi_class.Rmd" and "binary.Rmd" files:
+Install and run the following packages in **RStudio** to support running **'binary.Rmd'** and **'multi_class.Rmd'** files:
 
 ```{r}
 install.packages('caret')

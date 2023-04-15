@@ -41,7 +41,7 @@ Running **'Binary.Rmd'** will get **"binary.txt"**; running **'multi_class.Rmd'*
 
 ## Prerequisites
 
-** Rstudio **
+**Rstudio**
 
 ## Installing
 

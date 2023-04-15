@@ -39,11 +39,11 @@ Running **'Binary.Rmd'** will get **"binary.txt"**; running **'multi_class.Rmd'*
 
 ***When running **'multi_class.Rmd'**, you need to run **'Binary.Rmd'** first, because you need to load **"binary.txt"** in **'multi_class.Rmd'**.***
 
-# Prerequisites
+## Prerequisites
 
 ** Rstudio **
 
-# Installing
+## Installing
 
 Install and run the following packages in RStudio to support running "multi_class.Rmd" and "binary.Rmd" files:
 

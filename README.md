@@ -12,8 +12,11 @@ This project aims to build a prediction model using wearable sensor technology d
 The dataset consists of the following files:
 
 'training_data.txt': Training dataset
+
 'test_data.txt': Data set to be predicted
+
 'data_dictionary.txt': Introduction of the dataset
+
 'features_info.txt': Detailed information about each variable
 
 ## Running the Code
@@ -21,8 +24,11 @@ The dataset consists of the following files:
 To run the Rmd files, download the following files:
 
 'test_data.txt'
+
 'training_data.txt'
+
 'Binary.Rmd'
+
 'multi_class.Rmd'
 
 Ensure that the Rmd file and the txt data file are in the same path. Running each Rmd file will generate a txt file, which is the prediction result of the prediction data for different tasks.
@@ -36,8 +42,11 @@ Rstudio
 Install and run the following packages in RStudio to support running "multi_class.Rmd" and "binary.Rmd" files:
 
 install.packages('caret')
+
 install.packages('caretEnsemble')
+
 install.packages('glmnet')
+
 install.packages('readr')
 
 # Method

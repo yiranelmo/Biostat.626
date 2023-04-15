@@ -33,6 +33,10 @@ To run the Rmd files, download the following files:
 
 Ensure that the Rmd file and the txt data file are in the same path. Running each Rmd file will generate a txt file, which is the prediction result of the prediction data for different tasks.
 
+Running **'Binary.Rmd'** will get **"binary.txt"**; running **'multi_class.Rmd'** will get **"multiclass.txt"** file.
+
+***When running **'multi_class.Rmd'**, you need to run **'Binary.Rmd'** first, because you need to load **"binary.txt"** in **'multi_class.Rmd'**.***
+
 # Prerequisites
 
 Rstudio
@@ -50,10 +54,10 @@ install.packages('readr')
 
 # Method
 
-- For task 1, construct the C5.0 algorithm to complete the binary classifier task.
+- For task 1, construct the **C5.0 algorithm** to complete the binary classifier task.
 
-* For task 2, build generalized linear models to complete the multi-class classifier task.
+* For task 2, build **generalized linear models** to complete the multi-class classifier task.
 
 # Performance
 
-Through continuous optimization, 100% accuracy and 95.7% accuracy in task 1 and 95.7% in task 2 were obtained on the Leaderboard.
+Through continuous optimization, 100% accuracy in task 1 and 95.7% in task 2 were obtained on the Leaderboard.

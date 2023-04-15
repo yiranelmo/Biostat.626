@@ -2,8 +2,8 @@
 
 This project aims to build a prediction model using wearable sensor technology data to recognize human activities. Two tasks are to be completed using the provided dataset:
 
-1. Binary Classification: Classify the activity of each time window into static (0) and dynamic (1). For this task, postural transitions are considered as static (0).
-2. Multi-class Classification: Classify walking (1), walking_upstairs (2), walking_downstairs (3), sitting (4), standing (5), lying (6), and static postural transition (7).
+1. **Binary Classification**: Classify the activity of each time window into static (0) and dynamic (1). For this task, postural transitions are considered as static (0).
+2. **Multi-class Classification**: Classify walking (1), walking_upstairs (2), walking_downstairs (3), sitting (4), standing (5), lying (6), and static postural transition (7).
 
 # Getting Started
 
@@ -11,25 +11,25 @@ This project aims to build a prediction model using wearable sensor technology d
 
 The dataset consists of the following files:
 
-· 'training_data.txt': Training dataset
+- **'training_data.txt'**: Training dataset
 
-· 'test_data.txt': Data set to be predicted
+* **'test_data.txt'**: Data set to be predicted
 
-· 'data_dictionary.txt': Introduction of the dataset
++ **'data_dictionary.txt'**: Introduction of the dataset
 
-· 'features_info.txt': Detailed information about each variable
+- **'features_info.txt'**: Detailed information about each variable
 
 ## Running the Code
 
 To run the Rmd files, download the following files:
 
-· 'test_data.txt'
+- **'test_data.txt'**
 
-· 'training_data.txt'
+* **'training_data.txt'**
 
-· 'Binary.Rmd'
++ **'Binary.Rmd'**
 
-· 'multi_class.Rmd'
+- **'multi_class.Rmd'**
 
 Ensure that the Rmd file and the txt data file are in the same path. Running each Rmd file will generate a txt file, which is the prediction result of the prediction data for different tasks.
 
@@ -50,9 +50,9 @@ install.packages('readr')
 
 # Method
 
-· For task 1, construct the C5.0 algorithm to complete the binary classifier task.
+- For task 1, construct the C5.0 algorithm to complete the binary classifier task.
 
-· For task 2, build generalized linear models to complete the multi-class classifier task.
+* For task 2, build generalized linear models to complete the multi-class classifier task.
 
 # Performance
 

@@ -35,9 +35,11 @@ To run the Rmd files, download the following files:
 
 Ensure that the Rmd file and the txt data file are in the same path. Running each Rmd file will generate a txt file, which is the prediction result of the prediction data for different tasks.
 
+```{html}
 <span style="color:red">
 'Binary.Rmd' will take 30 mins when running
 </span>
+```
 
 Running **'Binary.Rmd'** will get **"binary.txt"**; running **'multi_class.Rmd'** will get **"multiclass.txt"** file.
 

@@ -39,7 +39,7 @@ Ensure that the Rmd file and the txt data file are in the same path. Running eac
 
 ***'Binary.Rmd' will take 30 mins when running.***
 
-***'multi_class.Rmd' will take 3 hours when running.***
+***'multi_class.Rmd' will take 2.5 hours when running.***
 
 Running **'Binary.Rmd'** will get **"binary.txt"**
 
